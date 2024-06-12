@@ -15,16 +15,16 @@ services:
             - mysql_config_prod:/etc/mysql
 
     super_backend:
+        container_name: super_api_prod
         build:
             context: .
             dockerfile: Dockerfile
             target: production
         env_file: ./.env
         ports: 
-            - $HTTP_REPLICA_PORTS:$HTTP_PORT
+            - $HTTP_PORT:$HTTP_PORT
         command: npm run start:prod
-        deploy:
-            replicas: $API_REPLICAS
+        image: jpafrota/monitoria-backend-tcc:prod
 
 volumes:
     mysql_prod:

@@ -1,5 +1,19 @@
 version: '3.8'
 services:
+    super_mysqldb:
+        image: mysql/mysql-server:8.0.23
+        container_name: super_db_staging
+        env_file: ./.env
+        environment: 
+            MYSQL_TCP_PORT: $MYSQL_DOCKER_PORT
+            MYSQL_DATABASE: $MYSQL_DATABASE
+            MYSQL_ROOT_HOST: "%"
+        ports: 
+            - $MYSQL_LOCAL_PORT:$MYSQL_DOCKER_PORT
+        volumes:
+            - mysql_staging:/var/lib/mysql
+            - mysql_config_staging:/etc/mysql
+
     super_backend:
         container_name: super_api_stg
         build:
@@ -8,5 +22,10 @@ services:
             target: staging
         env_file: ./.env
         ports: 
-            - $HTTPS_PORT:$HTTPS_PORT
-        command: npm run start:prod
+            - $HTTP_PORT:$HTTP_PORT
+        command: npm run start:stg
+        image: jpafrota/monitoria-backend-tcc:staging
+
+volumes:
+    mysql_staging:
+    mysql_config_staging:
