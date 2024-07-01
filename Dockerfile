@@ -17,8 +17,7 @@ RUN npm ci --omit=dev
 COPY . ./
 RUN npx prisma generate
 RUN npm run build
-ENV NODE_ENV=staging
-EXPOSE 8080
+EXPOSE 3003
 
 
 FROM base as development
