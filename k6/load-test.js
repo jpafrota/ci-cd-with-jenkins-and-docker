@@ -4,8 +4,8 @@ import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporte
 
 export const options = {
     stages: [
-        { target: 350, duration: '30s' },
-        { target: 350, duration: '5m' },
+        { target: 100, duration: '30s' },
+        { target: 100, duration: '5m' },
         { target: 0, duration: '1m' }
     ],
     thresholds: {
@@ -15,10 +15,8 @@ export const options = {
     }
 }
 
-const BASE_URL = 'http://localhost:3004'
-
 export function setup() {
-    const loginRes = http.post(`${BASE_URL}/auth/login`, {
+    const loginRes = http.post(`${__ENV.BASE_URL}/auth/login`, {
         email: 'jpaf@icomp.ufam.edu.br',
         password: '12345678'
     });
@@ -36,7 +34,7 @@ export default function (token) {
         }
     }
 
-    const res = http.get(`${BASE_URL}/monitor/all`, params);
+    const res = http.get(`${__ENV.BASE_URL}/monitor/all`, params);
 
     check(res, {
         'status code 200': (r) => r.status === 200

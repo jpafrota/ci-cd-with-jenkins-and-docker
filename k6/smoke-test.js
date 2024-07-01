@@ -10,10 +10,8 @@ export const options = {
     }
 }
 
-const BASE_URL = 'http://localhost:3004'
-
 export function setup() {
-    const loginRes = http.post(`${BASE_URL}/auth/login`, {
+    const loginRes = http.post(`${__ENV.BASE_URL}/auth/login`, {
         email: 'jpaf@icomp.ufam.edu.br',
         password: '12345678'
     });
@@ -32,7 +30,7 @@ export default function (token) {
         }
     }
 
-    const res = http.get(`${BASE_URL}/monitor/all`, params);
+    const res = http.get(`${__ENV.BASE_URL}/monitor/all`, params);
 
     check(res, {
         'status code 200': (r) => r.status === 200
