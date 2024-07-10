@@ -2,6 +2,8 @@
 
 output_file="system_usage.txt"
 
+> "$output_file"
+
 while true; do
     timestamp=$(date +"%Y-%m-%d %H:%M:%S")
     cpu_usage=$(mpstat | awk '$12 ~ /[0-9.]+/ { print 100 - $12 }')
