@@ -1,6 +1,6 @@
 import http from 'k6/http';
 import { check, sleep } from 'k6';
-import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
+import { textSummary } from 'https://jslib.k6.io/k6-summary/0.0.1/index.js';
 
 export const options = {
     vus: 1,
@@ -43,6 +43,6 @@ export default function (token) {
 
 export function handleSummary(data) {
     return {
-        "smoke-test-results.html": htmlReport(data),
+        'smoke-test-results.txt': textSummary(data, { indent: ' ', enableColors: false })
     };
 }
